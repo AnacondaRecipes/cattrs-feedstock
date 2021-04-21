@@ -18,13 +18,13 @@ build:
 
 requirements:
   host:
-    - python >=3.5
+    - python >=3.7
     - pip
     - setuptools_scm >=3.4.1
-    - attrs >=17.3
+    - attrs >=20.1.0
   run:
-    - python >=3.5
-    - attrs >=17.3
+    - python >=3.7
+    - attrs >=20.1.0
 
 test:
   imports:
