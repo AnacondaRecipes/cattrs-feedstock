@@ -20,8 +20,8 @@ requirements:
   host:
     - python >=3.7
     - pip
-    - setuptools_scm >=3.4.1
     - attrs >=20.1.0
+    - poetry-core >=1.0.0
   run:
     - python >=3.7
     - attrs >=20.1.0
@@ -30,6 +30,11 @@ test:
   imports:
     - cattr
     - cattr.converters
+  requires:
+    - pip
+  commands:
+    - pip check
+
 
   ### Lines below can be uncommented if/when tests stop using relative imports and
   ### instead import from the installed package like they're supposed to.
