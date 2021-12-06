@@ -1,6 +1,6 @@
 {% set name = "cattrs" %}
-{% set version = "1.7.1" %}
-{% set sha256 = "95265b8aaa45e6de75b5f52ae081e021a2a7a688babdb711e4174e6b18920d08" %}
+{% set version = "1.9.0" %}
+{% set sha256 = "1ef33f089e0a494e8d1b487508356f055c865b1955b125c00c991a4358543c80" %}
 
 package:
   name: {{ name|lower }}
