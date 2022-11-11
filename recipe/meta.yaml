@@ -1,6 +1,6 @@
 {% set name = "cattrs" %}
-{% set version = "1.7.1" %}
-{% set sha256 = "95265b8aaa45e6de75b5f52ae081e021a2a7a688babdb711e4174e6b18920d08" %}
+{% set version = "22.1.0" %}
+{% set sha256 = "94b67b64cf92c994f8784c40c082177dc916e0489a73a9a36b24eb18a9db40c6" %}
 
 package:
   name: {{ name|lower }}
@@ -13,20 +13,20 @@ source:
 
 build:
   number: 0
-  noarch: python
   script: '{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv '
 
 requirements:
   host:
-    - python >=3.7
+    - python
     - pip
     - attrs >=20.1.0
     - poetry-core >=1.0.0
     - wheel
-    - setuptools
   run:
-    - python >=3.7
+    - python
     - attrs >=20.1.0
+    - exceptiongroup  # [py<311]
+    - typing_extensions  # [py<38]
 
 test:
   imports:
