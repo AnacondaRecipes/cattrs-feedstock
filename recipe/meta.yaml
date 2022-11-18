@@ -20,7 +20,6 @@ requirements:
   host:
     - python
     - pip
-    - attrs >=20.1.0
     - poetry-core >=1.0.0
     - wheel
   run:
