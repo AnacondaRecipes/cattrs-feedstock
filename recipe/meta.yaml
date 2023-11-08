@@ -42,7 +42,10 @@ test:
     - pip
     - pytest
     - hypothesis >=6.79.4
-    - typing-extensions >=4.7.1
+    # restore upstream pinning on 23.2.0
+    # 4.5.0 makes tests in test_typeddicts.py pass
+    # see https://github.com/python-attrs/cattrs/issues/439
+    - typing-extensions =4.5.0
   source_files:
     - tests
   commands:
