@@ -1,53 +1,56 @@
 {% set name = "cattrs" %}
-{% set version = "22.1.0" %}
-{% set sha256 = "94b67b64cf92c994f8784c40c082177dc916e0489a73a9a36b24eb18a9db40c6" %}
+{% set version = "23.1.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://github.com/python-attrs/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 9dbc7359c1ac2acdd011607218fd2aac26aab5fdaa51a7e162110d029e277ff3
 
 build:
   number: 0
-  script: '{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv '
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: true  # [py<37]
 
 requirements:
   host:
     - python
     - pip
-    - poetry-core >=1.0.0
-    - wheel
+    - poetry-core >=1.1.0
   run:
     - python
-    - attrs >=20.1.0
-    - exceptiongroup  # [py<311]
-    - typing_extensions  # [py<38]
+    - attrs >=20
+    - exceptiongroup             # [py<311]
+    - typing_extensions >=4.1.0  # [py<311]
+  run_constrained:
+    - ujson >=5.4.0,<6
+    - orjson >=3.5.2,<4
+    - msgpack >=1.0.2,<2
+    - PyYAML >=6.0,<7
+    - tomlkit  >=0.11.4,<1
+    - cbor2 >=5.4.6,<6
+    - pymongo >=4.2.0,<5
 
 test:
   imports:
     - cattr
     - cattr.converters
+    - cattr.preconf
   requires:
     - pip
+    - pytest
+    - hypothesis >=6.79.4
+    - typing-extensions >=4.7.1
+  source_files:
+    - tests
   commands:
     - pip check
-
-
-  ### Lines below can be uncommented if/when tests stop using relative imports and
-  ### instead import from the installed package like they're supposed to.
-
-  # requires:
-  #   - pytest
-  #   - hypothesis
-  # commands:
-  #   - py.test -v tests
-  # source_files:
-  #   - tests
+    # ignore:
+    #   test_unstructure_collections.py because it requires immutables>=0.20 (unavailable)
+    #   test_preconf.py because it requires bson (optional dependency)
+    - pytest -v tests --ignore=tests/test_unstructure_collections.py --ignore=tests/test_preconf.py
 
 about:
   home: https://github.com/python-attrs/cattrs
@@ -59,8 +62,8 @@ about:
     cattrs is an open source Python library for structuring and unstructuring data.
     cattrs works best with attrs classes and the usual Python collections, but other
     kinds of classes are supported by manually registering converters.
-  doc_url: https://cattrs.readthedocs.io/en/latest/
   dev_url: https://github.com/python-attrs/cattrs
+  doc_url: https://catt.rs/
 
 extra:
   recipe-maintainers:
