@@ -24,14 +24,6 @@ requirements:
     - attrs >=20
     - exceptiongroup             # [py<311]
     - typing_extensions >=4.1.0  # [py<311]
-  run_constrained:
-    - ujson >=5.4.0,<6
-    - orjson >=3.5.2,<4
-    - msgpack >=1.0.2,<2
-    - PyYAML >=6.0,<7
-    - tomlkit  >=0.11.4,<1
-    - cbor2 >=5.4.6,<6
-    - pymongo >=4.2.0,<5
 
 test:
   imports:
