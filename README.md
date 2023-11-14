@@ -1,7 +1,7 @@
 About cattrs
 ============
 
-Home: https://github.com/Tinche/cattrs
+Home: https://github.com/python-attrs/cattrs
 
 Package license: MIT
 
