@@ -1,5 +1,5 @@
 {% set name = "cattrs" %}
-{% set version = "24.1.2" %}
+{% set version = "25.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/cattrs-{{ version }}.tar.gz
-  sha256: 8028cfe1ff5382df59dd36474a86e02d817b06eaf8af84555441bac915d2ef85
+  sha256: 1ac88d9e5eda10436c4517e390a4142d88638fe682c436c93db7ce4a277b884a
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true  # [py<38]
+  skip: true  # [py<39]
 
 requirements:
   host:
@@ -22,9 +22,16 @@ requirements:
     - hatch-vcs
   run:
     - python
-    - attrs >=23.1.0
-    - exceptiongroup >=1.1.1            # [py<311]
-    - typing_extensions >=4.1.0,!=4.6.3 # [py<311]
+    - attrs >=25.4.0
+    - exceptiongroup >=1.1.1  # [py<311]
+    - typing_extensions >=4.14.0
+  run_constrained:
+    - pymongo >=4.4.0
+    - cbor2 >=5.4.6
+    - msgpack-python >=1.0.5
+    - PyYAML >=6.0
+    - tomlkit >=0.11.8
+    - ujson >=5.10.0
 
 test:
   imports:
@@ -41,7 +48,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: 'Complex custom class converters for attrs.'
+  summary: Complex custom class converters for attrs.
   description: |
     cattrs is an open source Python library for structuring and unstructuring data.
     cattrs works best with attrs classes and the usual Python collections, but other
