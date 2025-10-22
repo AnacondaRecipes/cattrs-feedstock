@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/cattrs-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 1ac88d9e5eda10436c4517e390a4142d88638fe682c436c93db7ce4a277b884a
 
 build:
@@ -23,25 +23,50 @@ requirements:
   run:
     - python
     - attrs >=25.4.0
-    - exceptiongroup >=1.1.1  # [py<311]
     - typing_extensions >=4.14.0
+    - exceptiongroup >=1.1.1  # [py<311]
   run_constrained:
-    - pymongo >=4.4.0
-    - cbor2 >=5.4.6
-    - msgpack-python >=1.0.5
-    - PyYAML >=6.0
-    - tomlkit >=0.11.8
     - ujson >=5.10.0
+    - orjson >=3.11.3  # [python_impl == CPython] 
+    - msgpack-python >=1.0.5
+    - pyyaml >=6.0
+    - tomlkit >=0.11.8
+    - cbor2 >=5.4.6
+    - pymongo >=4.4.0
+    - msgspec >=0.19.0  # [python_impl == CPython] 
+
+# E   ModuleNotFoundError: No module named 'bson'
+{% set ignore_tests = "--ignore=tests/preconf/test_pyyaml.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_preconf.py" %}
 
 test:
+  source_files:
+    - tests
   imports:
     - cattr
-    - cattr.converters
-    - cattr.preconf
+    - cattrs
+    - cattrs._compat
+    - cattrs._generics
+    - cattrs.cols
+    - cattrs.converters
+    - cattrs.disambiguators
+    - cattrs.dispatch
+    - cattrs.errors
+    - cattrs.fns
+    - cattrs.gen
+    - cattrs.preconf
+    - cattrs.strategies
   requires:
     - pip
+    - pytest
+    - hypothesis
+    - immutables
+    - pyyaml >=6.0
+    - msgspec >=0.19.0
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -v tests {{ ignore_tests }}
 
 about:
   home: https://github.com/python-attrs/cattrs
@@ -54,7 +79,7 @@ about:
     cattrs works best with attrs classes and the usual Python collections, but other
     kinds of classes are supported by manually registering converters.
   dev_url: https://github.com/python-attrs/cattrs
-  doc_url: https://catt.rs/
+  doc_url: https://catt.rs
 
 extra:
   recipe-maintainers:
