@@ -1,5 +1,7 @@
 {% set name = "cattrs" %}
-{% set version = "25.3.0" %}
+{% set version = "26.1.0" %}
+{% set ignore_tests = "--ignore=tests/preconf/test_pyyaml.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_preconf.py" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +9,12 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1ac88d9e5eda10436c4517e390a4142d88638fe682c436c93db7ce4a277b884a
+  sha256: fa239e0f0ec0715ba34852ce813986dfed1e12117e209b816ab87401271cdd40
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -27,18 +29,16 @@ requirements:
     - exceptiongroup >=1.1.1  # [py<311]
   run_constrained:
     - ujson >=5.10.0
-    - orjson >=3.11.3  # [python_impl == CPython] 
+    - orjson >=3.11.3  # [python_impl == CPython]
     - msgpack-python >=1.0.5
-    - pyyaml >=6.0
+    - PyYAML >=6.0
     - tomlkit >=0.11.8
     - cbor2 >=5.4.6
     - pymongo >=4.4.0
-    - msgspec >=0.19.0  # [python_impl == CPython] 
+    - msgspec >=0.19.0  # [python_impl == CPython]
+    - tomli-w >=1.1.0
 
 # E   ModuleNotFoundError: No module named 'bson'
-{% set ignore_tests = "--ignore=tests/preconf/test_pyyaml.py" %}
-{% set ignore_tests = ignore_tests + " --ignore=tests/test_preconf.py" %}
-
 test:
   source_files:
     - tests
