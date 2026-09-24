@@ -1,11 +1,8 @@
 {% set name = "cattrs" %}
 {% set version = "26.2.0" %}
-{% set ignore_tests = "--ignore=tests/preconf/test_pyyaml.py" %}
-{% set ignore_tests = ignore_tests + " --ignore=tests/test_preconf.py" %}
 
-# E   ModuleNotFoundError: No module named 'bson'
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -32,12 +29,17 @@ requirements:
     - ujson >=5.10.0
     - orjson >=3.11.3  # [python_impl == CPython]
     - msgpack-python >=1.0.5
-    - PyYAML >=6.0
+    - pyyaml >=6.0
     - tomlkit >=0.11.8
     - cbor2 >=5.4.6
     - pymongo >=4.4.0
     - msgspec >=0.19.0  # [python_impl == CPython]
+    - tomli >=1.1.0  # [py<311]
     - tomli-w >=1.1.0
+
+# E   ModuleNotFoundError: No module named 'bson'
+{% set ignore_tests = "--ignore=tests/preconf/test_pyyaml.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_preconf.py" %}
 
 test:
   source_files:
@@ -66,7 +68,7 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
-    - pytest -v tests {{ ignore_tests }}
+    - pytest -vv tests {{ ignore_tests }}
 
 about:
   home: https://github.com/python-attrs/cattrs
