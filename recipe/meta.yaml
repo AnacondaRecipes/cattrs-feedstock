@@ -27,13 +27,13 @@ requirements:
     - exceptiongroup >=1.1.1  # [py<311]
   run_constrained:
     - ujson >=5.10.0
-    - orjson >=3.11.3  # [python_impl == CPython]
+    - orjson >=3.11.3
     - msgpack-python >=1.0.5
     - pyyaml >=6.0
     - tomlkit >=0.11.8
     - cbor2 >=5.4.6
     - pymongo >=4.4.0
-    - msgspec >=0.21.1  # [python_impl == CPython]
+    - msgspec >=0.21.1
     - tomli >=1.1.0  # [py<311]
     - tomli-w >=1.1.0
 
