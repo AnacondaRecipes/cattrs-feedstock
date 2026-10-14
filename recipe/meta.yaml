@@ -1,13 +1,16 @@
 {% set name = "cattrs" %}
-{% set version = "26.2.0" %}
+{% set version = "26.2.1" %}
+{% set ignore_tests = "--ignore=tests/preconf/test_pyyaml.py" %}
+{% set ignore_tests = ignore_tests + " --ignore=tests/test_preconf.py" %}
 
+# E   ModuleNotFoundError: No module named 'bson'
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3cf49f69df8326bcf17a3cb3d3d3ec4a856858fe3a7473746c9044c317d3ba55
+  sha256: 679132bfdc225c5ee40c024fc42519954767c387f950dc6751946c586bccdc6d
 
 build:
   number: 0
@@ -29,17 +32,13 @@ requirements:
     - ujson >=5.10.0
     - orjson >=3.11.3
     - msgpack-python >=1.0.5
-    - pyyaml >=6.0
+    - PyYAML >=6.0
     - tomlkit >=0.11.8
     - cbor2 >=5.4.6
     - pymongo >=4.4.0
     - msgspec >=0.21.1
     - tomli >=1.1.0  # [py<311]
     - tomli-w >=1.1.0
-
-# E   ModuleNotFoundError: No module named 'bson'
-{% set ignore_tests = "--ignore=tests/preconf/test_pyyaml.py" %}
-{% set ignore_tests = ignore_tests + " --ignore=tests/test_preconf.py" %}
 
 test:
   source_files:
